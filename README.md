@@ -17,12 +17,12 @@ Allows for importing data from a [GQ GMC-500 Geiger counter](https://www.gqelect
 Dependency: Docker installed.
 
 1. Identify the USB port the Geiger counter is attached to. Running `dmesg` after plugging-in the USB cable may help to identify
-1. Download and run (here `/dev/ttyUSB1` is the identified USB port): `sudo docker run --name gq-gmc -v config.yaml:/app/config.yaml --device=/dev/ttyUSB1 vdbg/gq-gmc-influx:latest`
-2. Copy template config file from image: `sudo docker cp gq-gmc:/app/template.config.yaml config.yaml`
-3. Edit `config.yaml` by following the instructions in the file 
-4. Start the container again to verify the settings are correct: `sudo docker start gq-gmc -i`
-5. Once the settings are finalized, `Ctrl-C` to stop the container, `sudo docker container rm gq-gmc` to delete it
-6. Start the container with final settings:
+2. Download and run (in this example, `/dev/ttyUSB1` is the identified USB port): `sudo docker run --name gq-gmc -v config.yaml:/app/config.yaml --device=/dev/ttyUSB1 vdbg/gq-gmc-influx:latest`
+3. Copy template config file from image: `sudo docker cp gq-gmc:/app/template.config.yaml config.yaml`
+4. Edit `config.yaml` by following the instructions in the file
+5. Start the container again to verify the settings are correct: `sudo docker start gq-gmc -i`
+6. Once the settings are finalized, `Ctrl-C` to stop the container, `sudo docker container rm gq-gmc` to delete it
+7. Start the container with final settings:
 
 ``
 sudo docker run \
