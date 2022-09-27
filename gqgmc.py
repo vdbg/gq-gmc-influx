@@ -57,12 +57,12 @@ class GqGmcConnector:
 
         raise Exception(f"Expected {size} bytes; got {len(ret)} instead. Possibly wrong model or firmware version.")
 
-    def fetch_data(self):
+    def fetch_data(self, measurement: str):
         cpm = self.__get_sensor_value(b'GETCPM')
         logging.debug(f"CPM: {cpm}")
 
         return {
-            "measurement": "radiation",
+            "measurement": measurement,
             "tags": {"host": platform.node()},
             "fields": {"cpm": cpm},
             "time": datetime.utcnow()

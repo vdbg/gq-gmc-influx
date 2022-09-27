@@ -1,9 +1,10 @@
 # Create org, bucket & token by navigating to your influx url from browser
 influx:
-  url: http://localhost:8086
-  bucket: Environment
-  token: super-secret-token
-  org: "your org in influx"
+  url: http://localhost:8086  # location of influxdb v2 database
+  bucket: Environment         # name of available bucket
+  token: super-secret-token   # token with write permission to bucket
+  org: "your org in influx"   # org of the bucket
+  measurement: "radiation"    # name to give to measurements
 
 main:
   logverbosity: INFO # by increasing level of verbosity: FATAL, ERROR, WARNING, INFO, DEBUG
