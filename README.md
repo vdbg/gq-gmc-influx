@@ -16,6 +16,17 @@ Allows for importing data from a [GQ GMC-500 Geiger counter](https://www.gqelect
 
 Dependency: Docker installed.
 
+``
+sudo docker run \
+  -d \
+  --name gq-gmc \
+  -v /path_to_your/config.yaml:/app/config.yaml \
+  --memory=100m \
+  --pull always \
+  --device=/dev/ttyUSB1 \
+  vdbg/gq-gmc-influx:latest
+``
+
 ### Without Docker
 
 Dependency: Python3 and pip3 installed. `sudo apt-get install python3-pip` if missing on raspbian.

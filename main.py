@@ -37,7 +37,7 @@ try:
         while True:
             try:
                 record = gcmConnector.fetch_data()
-                influxConnector.add_samples(record, 1)
+                influxConnector.add_samples(record)
                 if not loop_seconds:
                     exit(0)
                 time.sleep(loop_seconds)
