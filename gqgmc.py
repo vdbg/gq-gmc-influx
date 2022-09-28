@@ -59,7 +59,7 @@ class GqGmcConnector:
 
     def fetch_data(self, measurement: str):
         cpm = self.__get_sensor_value(b'GETCPM')
-        logging.debug(f"CPM: {cpm}")
+        logging.info(f"CPM: {cpm}")
 
         return {
             "measurement": measurement,
