@@ -1,0 +1,19 @@
+# Create org, bucket & token by navigating to your influx url from browser
+influx:
+  url: http://localhost:8086  # location of influxdb v2 database
+  bucket: Environment         # name of available bucket
+  token: super-secret-token   # token with write permission to bucket
+  org: "your org in influx"   # org of the bucket
+  measurement: "radiation"    # name to give to measurements
+
+main:
+  logverbosity: INFO # by increasing level of verbosity: FATAL, ERROR, WARNING, INFO, DEBUG
+  loop_seconds: 420  # how long to wait before pulling data again from the device. 0 to only read once.
+
+# Settings for QG GMC-500+ model from https://www.gqelectronicsllc.com/
+gqgmc:
+  port: /dev/ttyUSB0            # dmesg to confirm. Could be /dev/ttyUSB1 instead
+  baudrate: 115200              # try 57600 if 115200 doesn't work
+  timeout: 3                    # timeout in seconds for commands sent to the device
+  version: "GMC\\-500\\+Re 2.*" # regex for check on supported model and firmware versions since older or different ones may not work
+  check: true                   # set to true when debugging first run. Set to false otherwise (speeds things up)
