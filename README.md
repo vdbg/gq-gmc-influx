@@ -17,14 +17,14 @@ Allows for importing data from a [GQ GMC-500 Geiger counter](https://www.gqelect
 Dependency: Docker installed.
 
 1. Identify the USB port the Geiger counter is attached to. Running `dmesg | grep ttyUSB` after plugging-in the USB cable may help to identify (in my case: `ch341-uart converter now attached to ttyUSB1`)
-2. Download and run (in this example, `/dev/ttyUSB1` is the identified USB port): `sudo docker run --name gq-gmc -v config.yaml:/app/config.yaml --device=/dev/ttyUSB1 vdbg/gq-gmc-influx:latest`
+2. Download and run the Docker image (in this example, `/dev/ttyUSB1` is the identified USB port): `sudo docker run --name gq-gmc -v config.yaml:/app/config.yaml --device=/dev/ttyUSB1 vdbg/gq-gmc-influx:latest`
 3. Copy template config file from image: `sudo docker cp gq-gmc:/app/template.config.yaml config.yaml`
 4. Edit `config.yaml` by following the instructions in the file
 5. Start the container again to verify the settings are correct: `sudo docker start gq-gmc -i`
 6. Once the settings are finalized, `Ctrl-C` to stop the container, `sudo docker container rm gq-gmc` to delete it
 7. Start the container with final settings:
 
-``
+```
 sudo docker run \
   -d \
   --name gq-gmc \
@@ -34,7 +34,7 @@ sudo docker run \
   --restart=always \
   --device=/dev/ttyUSB1 \
   vdbg/gq-gmc-influx:latest
-``
+```
 
 ### Without Docker
 
