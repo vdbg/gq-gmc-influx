@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip install --no-cache-dir --disable-pip-version-check --upgrade pip
 
-COPY requirements.txt     /app
+COPY requirements.txt     /app/
 
 RUN pip install --no-cache-dir -r ./requirements.txt
 

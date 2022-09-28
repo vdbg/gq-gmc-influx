@@ -14,10 +14,11 @@ class GqGmcConnector:
 
     def __init__(self, port: str, baudrate: int, timeout: int, check: bool, expected_version: str):
         self.ser = serial.Serial(port, baudrate, timeout=timeout)
+        self.check = check
 
         if check:
             if len(serial.tools.list_ports.comports()) == 0:
-                raise Exception("No serial ports detected. Check that the device is plugged into an USB port.")
+                logging.warning("No serial ports detected. If not running in Docker container, check that the device is plugged into an USB port.")
 
             actual_version = self.__get_firmware_version()
 
@@ -26,12 +27,12 @@ class GqGmcConnector:
 
             logging.info(f"Device version: {actual_version}")
 
-    def __flush_serial_port(self) -> bytearray:
+    def __read_all(self) -> bytearray:
         ret = b""
 
-        while True:
+        while self.check:
             x = self.ser.read(1)
-            if len(x) == 0:
+            if not x:
                 break
             ret += x
 
@@ -41,7 +42,7 @@ class GqGmcConnector:
         self.ser.write(b'<'+command+b'>>')
 
     def __get_data(self, size: int) -> bytearray:
-        return self.ser.read(size) + self.__flush_serial_port()
+        return self.ser.read(size) + self.__read_all()
 
     def __get_firmware_version(self) -> str:
         self.__send_command(b'GETVER')
@@ -53,7 +54,7 @@ class GqGmcConnector:
         ret = self.__get_data(size)
 
         if len(ret) == size:
-            return ((ret[0] << 8 | ret[1]) << 8 | ret[2]) << 8 | ret[3]
+            return int.from_bytes(ret, byteorder='big')
 
         raise Exception(f"Expected {size} bytes; got {len(ret)} instead. Possibly wrong model or firmware version.")
 
